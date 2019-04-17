@@ -14,8 +14,8 @@ router.post('/register', async (ctx, next) => {
         ctx.body = JSON.stringify(result);
         return;
     }
-    if (accountService.isEmailDuplicate(emal)) {
-        result.isAccountDuplicate = false;
+    if (accountService.isEmailDuplicate(email)) {
+        result.isAccountNotDuplicate = false;
         ctx.body = JSON.stringify(result);
         return;
     }
