@@ -3,7 +3,7 @@ const Sequelize = require('sequelize')
 
 class UserDao extends BaseDao {
     constructor() {
-        super('companys', {
+        super('user', {
             email: {type: Sequelize.STRING},
             password: {type: Sequelize.STRING},
             moment: {type: Sequelize.LONG}
