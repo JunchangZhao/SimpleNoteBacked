@@ -1,28 +1,16 @@
-var config = require('../config/mysql_config')
-var mysql = require('mysql');
-
-pool = mysql.createPool({
-    host: config.dbConfig.HOST,
-    user: config.dbConfig.USER,
-    password: config.dbConfig.PASSWORD,
-    database: config.dbConfig.DATABASE,
-    port: config.dbConfig.PORT,
-});
+const db = require('../config/mysql_config')
+const Sequelize = require('sequelize')
+const OP = Sequelize.Op
 
 
 class BaseDao {
     constructor(tableName, schema) {
-        this.model = pool.getConnection(function (err, connection) {
-            if (!err) {
-                connection.define(tableName, schema);
-                connection.release();
-            }
-        })
+        this.model = db.define(tableName, schema)
     }
 
 
     getModel() {
-        return this.model
+        return this.model;
     }
 
 
@@ -85,4 +73,4 @@ class BaseDao {
 
 }
 
-module.exports = {BaseDao}
+module.exports = BaseDao
