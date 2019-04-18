@@ -45,7 +45,6 @@ class AccoutService extends BaseService {
 
     async login(email, pwd) {
         let result = await this.baseFindByFilter(['id'], {email: email, password: md5(pwd)})
-        console.log(result)
         return result.length > 0;
     }
 }
