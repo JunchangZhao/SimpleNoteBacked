@@ -22,13 +22,16 @@ class AccoutService extends BaseService {
     }
 
 
-    isEmailDuplicate(email) {
-        let result = this.baseFindByFilter(['id'], {email: email})
-        console.log(`result: ${result}`)
-        if (result != null) {
+    async isEmailDuplicate(email) {
+        let result = await this.baseFindByFilter(['id'], {email: email})
+        console.log(`result: ${result.length}`)
+        if (result.length != 0) {
             return true;
         }
         return false;
+    }
+
+    async registerAccount(email, pwd) {
     }
 }
 

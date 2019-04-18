@@ -11,13 +11,13 @@ router.post('/register', async (ctx, next) => {
     let passwd = ctx.request.body['passwd'];
     let result = accountService.checkEmailAndPasswd(email, passwd);
     if (!result.isSuccess) {
-        ctx.body = JSON.stringify(new Result(result));
+        ctx.body = JSON.stringify(new Result(true, result));
         return;
     }
-    if (accountService.isEmailDuplicate(email)) {
+    if (await accountService.isEmailDuplicate(email)) {
         result.isAccountNotDuplicate = false;
         result.isSuccess = false;
-        ctx.body = JSON.stringify(new Result(result));
+        ctx.body = JSON.stringify(new Result(true, result));
         return;
     }
 
