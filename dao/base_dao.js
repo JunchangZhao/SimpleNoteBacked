@@ -13,6 +13,10 @@ class BaseDao {
         return this.model;
     }
 
+    findAll(attributes){
+        return attributes ? this.model.findAll({attributes: attributes}) : this.model.findAll()
+    }
+
 
     findByFilter(attributes, where) {
         return attributes ? this.model.findAll({

@@ -27,6 +27,8 @@ router.post('/register', async (ctx, next) => {
 })
 
 router.post('/login', async (ctx, next) => {
+    let email = ctx.request.body['email'];
+    let passwd = ctx.request.body['passwd'];
     let isSuccess = await accountService.login(email, passwd);
     ctx.body = JSON.stringify(new Result(true,
         new LoginResult(isSuccess)));

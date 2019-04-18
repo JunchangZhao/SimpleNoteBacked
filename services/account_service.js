@@ -16,7 +16,7 @@ class AccoutService extends BaseService {
         if (!TextUtils.isEmail(email)) {
             return new RegisterResult(false, false, true, true)
         }
-        if (passwd.length < 4) {
+        if (passwd.length < 6) {
             return new RegisterResult(false, true, true, false);
         }
         return new RegisterResult(true, true, true, true);
@@ -25,7 +25,6 @@ class AccoutService extends BaseService {
 
     async isEmailDuplicate(email) {
         let result = await this.baseFindByFilter(['id'], {email: email})
-        console.log(`result: ${result.length}`)
         if (result.length != 0) {
             return true;
         }
@@ -33,13 +32,20 @@ class AccoutService extends BaseService {
     }
 
     async registerAccount(email, pwd) {
-        let result = await this.baseCreate({email: email, password: md5(pwd), moment: Date.now()})
-        return result.length == 1;
+        try {
+            await this.baseCreate({email: email, password: md5(pwd), moment: Date.now()})
+            return true
+        } catch (e) {
+            return false;
+        }
+
+
     }
 
 
     async login(email, pwd) {
-        let result = await this.baseFindAll({email: email, password: md5(pwd)})
+        let result = await this.baseFindByFilter(['id'], {email: email, password: md5(pwd)})
+        console.log(result)
         return result.length > 0;
     }
 }
