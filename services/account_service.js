@@ -1,11 +1,12 @@
 const TextUtils = require('../utils/text_utils')
 const RegisterResult = require('../model/net/register_result')
 const BaseService = require('./base_service.js')
-const dao = require('../dao/user_dao')
+const userDao = require('../dao/user_dao')
+const md5 = require('md5')
 
 class AccoutService extends BaseService {
     constructor() {
-        super(dao)
+        super(userDao)
     }
 
     checkEmailAndPasswd(email, passwd, ctx) {
@@ -22,9 +23,29 @@ class AccoutService extends BaseService {
     }
 
 
-    isEmailDuplicate(emal) {
-
+    async isEmailDuplicate(email) {
+        let result = await this.baseFindByFilter(['id'], {email: email})
+        if (result.length != 0) {
+            return true;
+        }
         return false;
+    }
+
+    async registerAccount(email, pwd) {
+        try {
+            await this.baseCreate({email: email, password: md5(pwd), moment: Date.now()})
+            return true
+        } catch (e) {
+            return false;
+        }
+
+
+    }
+
+
+    async login(email, pwd) {
+        let result = await this.baseFindByFilter(['id'], {email: email, password: md5(pwd)})
+        return result.length > 0;
     }
 }
 

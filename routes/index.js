@@ -11,25 +11,25 @@ router.post('/register', async (ctx, next) => {
     let passwd = ctx.request.body['passwd'];
     let result = accountService.checkEmailAndPasswd(email, passwd);
     if (!result.isSuccess) {
-        ctx.body = JSON.stringify(result);
+        ctx.body = new Result(true, result);
         return;
     }
-    if (accountService.isEmailDuplicate(email)) {
+    if (await accountService.isEmailDuplicate(email)) {
         result.isAccountNotDuplicate = false;
-        ctx.body = JSON.stringify(result);
+        result.isSuccess = false;
+        ctx.body = new Result(true, result);
         return;
     }
+    let isSuccess = await accountService.registerAccount(email, passwd);
+    ctx.body = new Result(true, new RegisterResult(isSuccess, true, true, true));
 
-    ctx.body = JSON.stringify(new Result(true,
-        new RegisterResult(true, true, true, true)));
 })
 
 router.post('/login', async (ctx, next) => {
-    //TODO
-
-
-    ctx.body = JSON.stringify(new Result(true,
-        new LoginResult(true)));
+    let email = ctx.request.body['email'];
+    let passwd = ctx.request.body['passwd'];
+    let isSuccess = await accountService.login(email, passwd);
+    ctx.body = new Result(true, new LoginResult(isSuccess));
 })
 
 
