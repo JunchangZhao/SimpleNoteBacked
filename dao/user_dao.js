@@ -17,8 +17,7 @@ class UserDao extends BaseDao {
                     isEmail: true
                 },
                 unique: true
-            }
-            ,
+            },
             password: {
                 type: Sequelize.STRING,
                 allowNull: false,

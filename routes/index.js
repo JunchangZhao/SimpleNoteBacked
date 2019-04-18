@@ -20,17 +20,16 @@ router.post('/register', async (ctx, next) => {
         ctx.body = JSON.stringify(new Result(true, result));
         return;
     }
-
+    let isSuccess = await accountService.registerAccount(email, passwd);
     ctx.body = JSON.stringify(new Result(true,
-        new RegisterResult(true, true, true, true)));
+        new RegisterResult(isSuccess, true, true, true)));
+
 })
 
 router.post('/login', async (ctx, next) => {
-    //TODO
-
-
+    let isSuccess = await accountService.login(email, passwd);
     ctx.body = JSON.stringify(new Result(true,
-        new LoginResult(true)));
+        new LoginResult(isSuccess)));
 })
 
 
