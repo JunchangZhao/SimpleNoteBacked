@@ -22,8 +22,12 @@ class AccoutService extends BaseService {
     }
 
 
-    isEmailDuplicate(emal) {
-
+    isEmailDuplicate(email) {
+        let result = this.baseFindByFilter(['id'], {email: email})
+        console.log(`result: ${result}`)
+        if (result != null) {
+            return true;
+        }
         return false;
     }
 }
