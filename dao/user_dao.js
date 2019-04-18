@@ -33,6 +33,7 @@ class UserDao extends BaseDao {
             }
         })
         this.model = super.getModel()
+        this.model.sync()
     }
 
 }
