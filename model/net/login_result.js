@@ -1,6 +1,7 @@
 class LoginResult {
-    constructor(isSuccess) {
+    constructor(isSuccess, jwt) {
         this.isSuccess = isSuccess;
+        this.jwt = jwt;
     }
 }
 
