@@ -1,4 +1,4 @@
-const db = require('../config/mysql_config')
+const db = require('../../config/mysql_config')
 const Sequelize = require('sequelize')
 const OP = Sequelize.Op
 

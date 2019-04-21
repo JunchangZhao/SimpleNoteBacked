@@ -1,7 +1,7 @@
 const TextUtils = require('../utils/text_utils')
 const RegisterResult = require('../model/net/register_result')
 const BaseService = require('./base_service.js')
-const userDao = require('../dao/user_dao')
+const userDao = require('../dao/mysql/user_dao')
 const md5 = require('md5')
 
 class AccoutService extends BaseService {
