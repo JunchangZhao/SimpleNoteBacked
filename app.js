@@ -1,5 +1,7 @@
 const Koa = require('koa');
-const app = new Koa();
+const koa = new Koa();
+const WeoSocket = require('koa-websocket')
+const app = WeoSocket(koa)
 const views = require('koa-views');
 const json = require('koa-json');
 const onerror = require('koa-onerror');
@@ -12,18 +14,18 @@ const note = require('./routes/note');
 const jwtKoa = require('koa-jwt')
 const {secret} = require("./utils/jwt_utils");
 // error handler
-onerror(app);
+onerror(koa);
 
 // middlewares
-app.use(bodyparser({
+koa.use(bodyparser({
     enableTypes: ['json', 'form', 'text']
 }));
-app.use(json());
-app.use(logger());
-app.use(require('koa-static')(__dirname + '/public'));
+koa.use(json());
+koa.use(logger());
+koa.use(require('koa-static')(__dirname + '/public'));
 
 /* 当token验证异常时候的处理，如token过期、token错误 */
-app.use((ctx, next) => {
+koa.use((ctx, next) => {
     return next().catch((err) => {
         if (err.status === 401) {
             ctx.status = 401;
@@ -34,16 +36,28 @@ app.use((ctx, next) => {
     });
 });
 
-app.use(jwtKoa({secret}).unless({
+koa.use(jwtKoa({secret}).unless({
     path: [/^\/login/, /^\/register/]
 }))
 
-app.use(views(__dirname + '/views', {
+app.ws.use((ctx, next) => {
+    return next().catch((err) => {
+        if (err.status === 401) {
+            ctx.status = 401;
+        } else {
+            throw err;
+        }
+    });
+});
+
+app.ws.use(jwtKoa({secret}));
+
+koa.use(views(__dirname + '/views', {
     extension: 'ejs'
 }));
 
 // logger
-app.use(async (ctx, next) => {
+koa.use(async (ctx, next) => {
     const start = new Date();
     await next();
     const ms = new Date() - start;
@@ -51,13 +65,15 @@ app.use(async (ctx, next) => {
 });
 
 // routes
-app.use(account.routes(), account.allowedMethods());
-app.use(note.routes(), note.allowedMethods());
+koa.use(account.routes());
 
 // error-handling
-app.on('error', (err, ctx) => {
+koa.on('error', (err, ctx) => {
     console.error('server error', err, ctx)
 });
+
+// websocket
+app.ws.use(note.routes())
 
 
 module.exports = app;

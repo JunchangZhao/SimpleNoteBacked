@@ -9,6 +9,10 @@ const accountService = new AccountService();
 router.post('/register', async (ctx, next) => {
     let email = ctx.request.body['email'];
     let passwd = ctx.request.body['passwd'];
+    if (email == null || passwd == null) {
+        ctx.body = new Result(false, null, "input is null!");
+        return;
+    }
     let result = accountService.checkEmailAndPasswd(email, passwd);
     if (!result.isSuccess) {
         ctx.body = new Result(true, result, null);
@@ -28,6 +32,10 @@ router.post('/register', async (ctx, next) => {
 router.post('/login', async (ctx, next) => {
     let email = ctx.request.body['email'];
     let passwd = ctx.request.body['passwd'];
+    if (email == null || passwd == null) {
+        ctx.body = new Result(false, null, "input is null!");
+        return;
+    }
     let isSuccess = await accountService.login(email, passwd);
     ctx.body = new Result(true, new LoginResult(isSuccess, isSuccess ? JwtUtils.getToken({user: email}) : null), null);
 })
