@@ -7,7 +7,7 @@ const json = require('koa-json');
 const onerror = require('koa-onerror');
 const bodyparser = require('koa-bodyparser');
 const logger = require('koa-logger');
-const Result = require('./model/net/result')
+const Result = require('./model/net/restful/result')
 const account = require('./routes/account');
 const note = require('./routes/note');
 
