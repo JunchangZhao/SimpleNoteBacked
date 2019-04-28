@@ -1,8 +1,8 @@
-var mongoose = require("../../config/mongodb_config");
+const mongoose = require("../../../config/mongodb_config");
 
 Schema = mongoose.Schema;
 
-var Note = new Schema({
+const Note = new Schema({
     title: {type: String},
     context: {type: String},
     createTime: {type: Number},

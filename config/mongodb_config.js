@@ -1,4 +1,4 @@
-var TMMS_DB_URL = 'mongodb://10.64.20.49:27017/simple_note';
+var TMMS_DB_URL = 'mongodb://127.0.0.1:27017/simple_note';
 var mongoose = require('mongoose');
 
 
