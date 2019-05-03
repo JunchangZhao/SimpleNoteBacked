@@ -1,8 +1,7 @@
-const mongoose = require("../../../config/mongodb_config");
+let {Schema} = require('mongoose');
+let {mongoClient} = require('../../mongo_model.js');
 
-Schema = mongoose.Schema;
-
-const Note = new Schema({
+const NoteSchema = new Schema({
     title: {type: String},
     context: {type: String},
     createTime: {type: Number},
@@ -10,4 +9,6 @@ const Note = new Schema({
     user: {type: String},
 });
 
-module.exports = mongoose.model('note', Note);
+let Note = mongoClient.model(`Note`, NoteSchema, 'note');
+
+module.exports = Note;

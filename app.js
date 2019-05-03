@@ -8,8 +8,8 @@ const onerror = require('koa-onerror');
 const bodyparser = require('koa-bodyparser');
 const logger = require('koa-logger');
 const Result = require('./model/net/restful/result')
-const account = require('./routes/account');
 const note = require('./routes/note');
+const account = require('./routes/account');
 
 const jwtKoa = require('koa-jwt')
 const {secret} = require("./utils/jwt_utils");
@@ -66,6 +66,7 @@ koa.use(async (ctx, next) => {
 
 // routes
 koa.use(account.routes());
+koa.use(note.routes());
 
 // error-handling
 koa.on('error', (err, ctx) => {

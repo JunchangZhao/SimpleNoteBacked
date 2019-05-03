@@ -1,11 +1,13 @@
-const NoteDao = require("../dao/mongodb/note_dao");
+const noteDao = require("../dao/mongodb/note_dao");
 
 
 class NoteService {
 
-    noteDao = new NoteDao();
-
+    async getAllNotesTimeInfoByUserName(userName) {
+        let notes = await noteDao.getNoteCreateAndMotifyInfoByUser(userName);
+        return notes;
+    }
 
 }
 
-module.exports = NoteService
+module.exports = new NoteService();
