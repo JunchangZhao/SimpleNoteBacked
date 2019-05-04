@@ -50,7 +50,7 @@ app.ws.use((ctx, next) => {
     });
 });
 
-app.ws.use(jwtKoa({secret}));
+// app.ws.use(jwtKoa({secret}));
 
 koa.use(views(__dirname + '/views', {
     extension: 'ejs'
