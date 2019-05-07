@@ -6,4 +6,11 @@ class Result {
     }
 }
 
-module.exports = Result;
+class SuccessResult extends Result {
+    constructor(data) {
+        super(true, data, "")
+    }
+
+}
+
+module.exports = {Result, SuccessResult};
