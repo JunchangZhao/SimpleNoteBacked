@@ -34,6 +34,12 @@ class NoteService {
             }
         }
     }
+
+    async getNoteByCreateTime(userName, createTime) {
+        let notes = await noteDao.getNoteByCreateTimeAndUser(userName, createTime);
+        return notes;
+    }
+
 }
 
 module.exports = new NoteService();

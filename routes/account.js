@@ -1,5 +1,5 @@
 const router = require('koa-router')()
-const Result = require('../model/net/restful/result')
+const {Result} = require('../model/net/restful/result')
 const RegisterResult = require('../model/net/restful/register_result')
 const LoginResult = require('../model/net/restful/login_result')
 const AccountService = require('../services/account_service')
