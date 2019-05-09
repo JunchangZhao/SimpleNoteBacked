@@ -14,7 +14,7 @@ router.all('/socket', async function (ctx) {
     ctx.websocket.on('message', async function (message) {
         let requestData = JSON.parse(message);
         if (requestData.type == "upload_note") {
-            await noteService.saveNote(user, requestData.data)
+            await noteService.saveNote(user, requestData.data[0])
         }
 
         if (requestData.type == "get_note") {

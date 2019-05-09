@@ -19,7 +19,7 @@ class NoteService {
                     title: data.title,
                     context: data.context,
                     createTime: data.createTime,
-                    modifyTime: modifyTime,
+                    modifyTime: data.modifyTime,
                     user: user
                 })
             );
