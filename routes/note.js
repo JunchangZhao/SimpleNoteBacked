@@ -10,7 +10,6 @@ router.all('/socket', async function (ctx) {
     let user = payload.user;
     console.log(user)
     let notes = await noteService.getAllNotesTimeInfoByUserName(user);
-    ctx.websocket.send(JSON.stringify(new WSResult("create_modify_time", notes)));
     ctx.websocket.on('message', async function (message) {
         let requestData = JSON.parse(message);
         if (requestData.type == "upload_note") {
@@ -23,6 +22,7 @@ router.all('/socket', async function (ctx) {
             await ctx.websocket.send(JSON.stringify(new WSResult("pull_note", note)));
         }
     })
+    ctx.websocket.send(JSON.stringify(new WSResult("create_modify_time", notes)));
 })
 
 

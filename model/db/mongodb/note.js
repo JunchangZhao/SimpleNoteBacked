@@ -7,6 +7,7 @@ const NoteSchema = new Schema({
     createTime: {type: Number},
     modifyTime: {type: Number},
     user: {type: String},
+    isDeleted: {type: Boolean}
 });
 
 let Note = mongoClient.model(`Note`, NoteSchema, 'note');

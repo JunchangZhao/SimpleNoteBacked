@@ -130,7 +130,7 @@ class BaseDao {
      */
     update(condition, updater) {
         return new Promise((resolve, reject) => {
-            this.Model.update(condition, updater, (error, results) => {
+            this.Model.updateMany(condition, updater, (error, results) => {
                 if (error) {
                     console.log('update error--> ', error);
                     reject(error);

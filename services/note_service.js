@@ -13,22 +13,24 @@ class NoteService {
     async saveNote(user, data) {
         let wherestr = {'user': user, 'createTime': data.createTime};
         let feilds = "modifyTime";
-        let modifyTime = await noteDao.findOne(wherestr, feilds);
-        if (modifyTime === null) {
+        let note = await noteDao.findOne(wherestr, feilds);
+        if (note === null) {
             await noteDao.save(new Note({
                     title: data.title,
                     context: data.context,
                     createTime: data.createTime,
                     modifyTime: data.modifyTime,
-                    user: user
+                    user: user,
+                    isDeleted: data.isDeleted
                 })
             );
         } else {
-            if (modifyTime > data.modifyTime) {
+            if (note.modifyTime < data.modifyTime) {
                 let updater = {
                     title: data.title,
                     context: data.context,
-                    modifyTime: data.modifyTime
+                    modifyTime: data.modifyTime,
+                    isDeleted: data.isDeleted
                 }
                 await noteDao.update(wherestr, updater);
             }
